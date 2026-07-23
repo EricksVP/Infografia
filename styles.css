@@ -1,8 +1,7 @@
 /* Estilos específicos para la Infografía Móvil */
 
 .chart-container {
-    display: grid;
-    place-items: start center;
+    display: block;
     width: 100%;
     overflow-x: auto;
     overflow-y: visible;
