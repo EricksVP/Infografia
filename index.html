@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Infografía - Análisis de Vuelos</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        background: "#051424",
+                        surface: "#0d1c2d",
+                        secondary: "#7bd0ff",
+                        text_primary: "#d4e4fa",
+                        text_secondary: "#798098"
+                    },
+                    fontFamily: {
+                        outfit: ["Outfit", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- Vega-Lite Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/vega"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed"></script>
+</head>
+
+<body class="bg-background text-text_primary font-outfit antialiased selection:bg-secondary selection:text-background pb-12">
+    
+    <!-- Header / Hero -->
+    <header class="w-full px-6 py-12 text-center border-b border-white/10 bg-gradient-to-b from-surface to-background">
+        <h1 class="text-4xl font-bold mb-4">Eficiencia en <span class="text-secondary">Vuelos</span></h1>
+        <p class="text-text_secondary text-sm max-w-sm mx-auto leading-relaxed">
+            Exploración visual del dataset de vuelos de NYC (2013). Descubre cómo el clima y la logística impactan el tráfico aéreo en esta infografía interactiva.
+        </p>
+        <div class="mt-8 animate-bounce opacity-60">
+            <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </header>
+
+    <main class="w-full max-w-md mx-auto px-4 mt-8 space-y-12">
+        
+        <!-- Storytelling 1: Heatmap -->
+        <section class="story-card bg-surface p-5 rounded-2xl border border-white/5 shadow-lg">
+            <div class="mb-4">
+                <span class="text-secondary text-xs font-bold uppercase tracking-widest">Congestión Horaria</span>
+                <h2 class="text-xl font-semibold mt-1">Mapa de Calor Operacional</h2>
+                <p class="text-text_secondary text-sm mt-2">
+                    Identifica inmediatamente las franjas horarias con mayor congestión en los principales aeropuertos de NY.
+                </p>
+            </div>
+            <!-- Chart Container -->
+            <div class="w-full bg-white rounded-xl overflow-hidden shadow-inner p-2 min-h-[300px] chart-container relative" id="vis1">
+                <p class="text-xs text-center text-gray-400 mt-10 animate-pulse">Cargando...</p>
+            </div>
+        </section>
+
+        <!-- Storytelling 2: Bar Chart -->
+        <section class="story-card bg-surface p-5 rounded-2xl border border-white/5 shadow-lg">
+            <div class="mb-4">
+                <span class="text-secondary text-xs font-bold uppercase tracking-widest">Rendimiento</span>
+                <h2 class="text-xl font-semibold mt-1">Retrasos por Aerolínea</h2>
+                <p class="text-text_secondary text-sm mt-2">
+                    Evaluación directa de la proporción de vuelos demorados. Descubre qué transportista es más eficiente.
+                </p>
+            </div>
+            <!-- Chart Container -->
+            <div class="w-full bg-white rounded-xl overflow-hidden shadow-inner p-2 min-h-[300px] chart-container relative" id="vis2">
+                <p class="text-xs text-center text-gray-400 mt-10 animate-pulse">Cargando...</p>
+            </div>
+        </section>
+
+        <!-- Storytelling 3: Bump Chart -->
+        <section class="story-card bg-surface p-5 rounded-2xl border border-white/5 shadow-lg">
+            <div class="mb-4">
+                <span class="text-secondary text-xs font-bold uppercase tracking-widest">Evolución</span>
+                <h2 class="text-xl font-semibold mt-1">Ranking de Puntualidad</h2>
+                <p class="text-text_secondary text-sm mt-2">
+                    Seguimiento dinámico de posiciones y fluctuaciones en la calidad del servicio a lo largo del tiempo.
+                </p>
+            </div>
+            <!-- Chart Container -->
+            <div class="w-full bg-white rounded-xl overflow-hidden shadow-inner p-2 min-h-[400px] chart-container relative overflow-x-auto" id="vis3">
+                <p class="text-xs text-center text-gray-400 mt-10 animate-pulse">Cargando datos...</p>
+            </div>
+        </section>
+
+    </main>
+
+
+
+    <!-- App Logic -->
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,649 @@
+{
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    },
+    "legend": {
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "orient": "bottom"
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "point": {
+          "filled": true,
+          "size": 90
+        }
+      },
+      "encoding": {
+        "color": {
+          "field": "carrier",
+          "type": "nominal",
+          "title": "Aerolínea",
+          "scale": {
+            "scheme": "tableau10"
+          }
+        },
+        "opacity": {
+          "condition": {
+            "param": "carrier_hover",
+            "value": 1,
+            "empty": true
+          },
+          "value": 0.25
+        },
+        "size": {
+          "condition": {
+            "param": "carrier_hover",
+            "value": 4.5
+          },
+          "value": 2.5
+        },
+        "tooltip": [
+          {
+            "field": "carrier",
+            "title": "Aerolínea",
+            "type": "nominal"
+          },
+          {
+            "field": "weather",
+            "title": "Clima",
+            "type": "nominal"
+          },
+          {
+            "field": "rank",
+            "format": ".0f",
+            "title": "Posición",
+            "type": "quantitative"
+          },
+          {
+            "field": "delay",
+            "format": ".1%",
+            "title": "% retrasados",
+            "type": "quantitative"
+          },
+          {
+            "field": "vuelos",
+            "format": ",",
+            "title": "Cantidad de vuelos",
+            "type": "quantitative"
+          }
+        ],
+        "x": {
+          "field": "weather",
+          "sort": [
+            "Normal",
+            "Lluvia",
+            "Viento fuerte",
+            "Lluvia + viento"
+          ],
+          "title": "Condición climática",
+          "type": "nominal"
+        },
+        "y": {
+          "axis": {
+            "format": "d",
+            "tickMinStep": 1,
+            "values": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ]
+          },
+          "field": "rank",
+          "scale": {
+            "domain": [
+              1,
+              8
+            ],
+            "reverse": true
+          },
+          "title": "Ranking de retrasos",
+          "type": "quantitative"
+        }
+      },
+      "title": "Ranking de aerolíneas según condición climática",
+      "transform": [
+        {
+          "aggregate": [
+            {
+              "op": "mean",
+              "field": "delayed",
+              "as": "delay"
+            },
+            {
+              "op": "count",
+              "as": "vuelos"
+            }
+          ],
+          "groupby": [
+            "weather",
+            "carrier"
+          ]
+        },
+        {
+          "window": [
+            {
+              "op": "row_number",
+              "field": "",
+              "as": "rank"
+            }
+          ],
+          "groupby": [
+            "weather"
+          ],
+          "sort": [
+            {
+              "field": "delay",
+              "order": "descending"
+            }
+          ]
+        },
+        {
+          "filter": "datum.rank <= 8"
+        }
+      ]
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 8,
+        "fontSize": 11,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "color": {
+          "field": "carrier",
+          "type": "nominal",
+          "scale": {
+            "scheme": "tableau10"
+          }
+        },
+        "opacity": {
+          "condition": {
+            "param": "carrier_hover",
+            "value": 1,
+            "empty": true
+          },
+          "value": 0.3
+        },
+        "text": {
+          "field": "carrier",
+          "type": "nominal"
+        },
+        "x": {
+          "field": "weather",
+          "sort": [
+            "Normal",
+            "Lluvia",
+            "Viento fuerte",
+            "Lluvia + viento"
+          ],
+          "type": "nominal"
+        },
+        "y": {
+          "field": "rank",
+          "scale": {
+            "domain": [
+              1,
+              8
+            ],
+            "reverse": true
+          },
+          "type": "quantitative"
+        }
+      },
+      "transform": [
+        {
+          "aggregate": [
+            {
+              "op": "mean",
+              "field": "delayed",
+              "as": "delay"
+            },
+            {
+              "op": "count",
+              "as": "vuelos"
+            }
+          ],
+          "groupby": [
+            "weather",
+            "carrier"
+          ]
+        },
+        {
+          "window": [
+            {
+              "op": "row_number",
+              "field": "",
+              "as": "rank"
+            }
+          ],
+          "groupby": [
+            "weather"
+          ],
+          "sort": [
+            {
+              "field": "delay",
+              "order": "descending"
+            }
+          ]
+        },
+        {
+          "filter": "datum.rank <= 8"
+        },
+        {
+          "filter": "(datum.weather === 'Lluvia + viento')"
+        }
+      ]
+    }
+  ],
+  "data": {
+    "name": "data-da94ec6d320a21e29a6db5f3ca749a08"
+  },
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.4.1.json",
+  "datasets": {
+    "data-da94ec6d320a21e29a6db5f3ca749a08": [
+      {
+        "weather": "Normal",
+        "carrier": "UA",
+        "delayed": 0.2050744472269136,
+        "vuelos": 51513
+      },
+      {
+        "weather": "Normal",
+        "carrier": "AA",
+        "delayed": 0.15144932697101346,
+        "vuelos": 28082
+      },
+      {
+        "weather": "Normal",
+        "carrier": "B6",
+        "delayed": 0.21886079442922957,
+        "vuelos": 47103
+      },
+      {
+        "weather": "Normal",
+        "carrier": "DL",
+        "delayed": 0.15407826045308684,
+        "vuelos": 41758
+      },
+      {
+        "weather": "Normal",
+        "carrier": "EV",
+        "delayed": 0.29330159073693324,
+        "vuelos": 46205
+      },
+      {
+        "weather": "Normal",
+        "carrier": "MQ",
+        "delayed": 0.20261349249412192,
+        "vuelos": 22116
+      },
+      {
+        "weather": "Normal",
+        "carrier": "US",
+        "delayed": 0.1147187375830164,
+        "vuelos": 17617
+      },
+      {
+        "weather": "Normal",
+        "carrier": "WN",
+        "delayed": 0.2578037904124861,
+        "vuelos": 10764
+      },
+      {
+        "weather": "Normal",
+        "carrier": "VX",
+        "delayed": 0.16907033503439095,
+        "vuelos": 4507
+      },
+      {
+        "weather": "Normal",
+        "carrier": "FL",
+        "delayed": 0.2522265764161026,
+        "vuelos": 2807
+      },
+      {
+        "weather": "Normal",
+        "carrier": "AS",
+        "delayed": 0.11764705882352941,
+        "vuelos": 646
+      },
+      {
+        "weather": "Normal",
+        "carrier": "9E",
+        "delayed": 0.24460193403099748,
+        "vuelos": 15098
+      },
+      {
+        "weather": "Normal",
+        "carrier": "F9",
+        "delayed": 0.2778702163061564,
+        "vuelos": 601
+      },
+      {
+        "weather": "Normal",
+        "carrier": "HA",
+        "delayed": 0.06229508196721312,
+        "vuelos": 305
+      },
+      {
+        "weather": "Viento fuerte",
+        "carrier": "DL",
+        "delayed": 0.1730901582931865,
+        "vuelos": 2906
+      },
+      {
+        "weather": "Viento fuerte",
+        "carrier": "AA",
+        "delayed": 0.18353783231083845,
+        "vuelos": 1956
+      },
+      {
+        "weather": "Viento fuerte",
+        "carrier": "MQ",
+        "delayed": 0.23619427811044577,
+        "vuelos": 1503
+      },
+      {
+        "weather": "Viento fuerte",
+        "carrier": "B6",
+        "delayed": 0.29603794642857145,
+        "vuelos": 3584
+      },
+      {
+        "weather": "Viento fuerte",
+        "carrier": "UA",
+        "delayed": 0.23175257731958762,
+        "vuelos": 2425
+      },
+      {
+        "weather": "Viento fuerte",
+        "carrier": "VX",
+        "delayed": 0.1903114186851211,
+        "vuelos": 289
+      },
+      {
+        "weather": "Normal",
+        "carrier": "YV",
+        "delayed": 0.26229508196721313,
+        "vuelos": 488
+      },
+      {
+        "weather": "Viento fuerte",
+        "carrier": "EV",
+        "delayed": 0.410912602607436,
+        "vuelos": 2071
+      },
+      {
+        "weather": "Viento fuerte",
+        "carrier": "WN",
+        "delayed": 0.3062015503875969,
+        "vuelos": 516
+      },
+      {
+        "weather": "Viento fuerte",
+        "carrier": "US",
+        "delayed": 0.15653964984552007,
+        "vuelos": 971
+      },
+      {
+        "weather": "Viento fuerte",
+        "carrier": "9E",
+        "delayed": 0.2970679012345679,
+        "vuelos": 1296
+      },
+      {
+        "weather": "Viento fuerte",
+        "carrier": "FL",
+        "delayed": 0.3064516129032258,
+        "vuelos": 186
+      },
+      {
+        "weather": "Viento fuerte",
+        "carrier": "HA",
+        "delayed": 0.13333333333333333,
+        "vuelos": 15
+      },
+      {
+        "weather": "Lluvia",
+        "carrier": "B6",
+        "delayed": 0.375,
+        "vuelos": 2936
+      },
+      {
+        "weather": "Lluvia",
+        "carrier": "US",
+        "delayed": 0.2634836427939876,
+        "vuelos": 1131
+      },
+      {
+        "weather": "Lluvia",
+        "carrier": "AA",
+        "delayed": 0.3182326621923937,
+        "vuelos": 1788
+      },
+      {
+        "weather": "Lluvia",
+        "carrier": "MQ",
+        "delayed": 0.4121122599704579,
+        "vuelos": 1354
+      },
+      {
+        "weather": "Lluvia",
+        "carrier": "DL",
+        "delayed": 0.36551215917464996,
+        "vuelos": 2714
+      },
+      {
+        "weather": "Lluvia",
+        "carrier": "UA",
+        "delayed": 0.3764981761334028,
+        "vuelos": 3838
+      },
+      {
+        "weather": "Lluvia",
+        "carrier": "WN",
+        "delayed": 0.5148247978436657,
+        "vuelos": 742
+      },
+      {
+        "weather": "Lluvia",
+        "carrier": "9E",
+        "delayed": 0.46635730858468677,
+        "vuelos": 862
+      },
+      {
+        "weather": "Lluvia",
+        "carrier": "VX",
+        "delayed": 0.3090277777777778,
+        "vuelos": 288
+      },
+      {
+        "weather": "Lluvia",
+        "carrier": "EV",
+        "delayed": 0.5108769544527533,
+        "vuelos": 2942
+      },
+      {
+        "weather": "Lluvia",
+        "carrier": "FL",
+        "delayed": 0.5941176470588235,
+        "vuelos": 170
+      },
+      {
+        "weather": "Lluvia",
+        "carrier": "F9",
+        "delayed": 0.46511627906976744,
+        "vuelos": 43
+      },
+      {
+        "weather": "Lluvia",
+        "carrier": "AS",
+        "delayed": 0.3673469387755102,
+        "vuelos": 49
+      },
+      {
+        "weather": "Viento fuerte",
+        "carrier": "AS",
+        "delayed": 0.4,
+        "vuelos": 15
+      },
+      {
+        "weather": "Viento fuerte",
+        "carrier": "YV",
+        "delayed": 0.5,
+        "vuelos": 32
+      },
+      {
+        "weather": "Viento fuerte",
+        "carrier": "F9",
+        "delayed": 0.3870967741935484,
+        "vuelos": 31
+      },
+      {
+        "weather": "Lluvia",
+        "carrier": "YV",
+        "delayed": 0.5909090909090909,
+        "vuelos": 22
+      },
+      {
+        "weather": "Lluvia",
+        "carrier": "HA",
+        "delayed": 0.0625,
+        "vuelos": 16
+      },
+      {
+        "weather": "Lluvia + viento",
+        "carrier": "AA",
+        "delayed": 0.3333333333333333,
+        "vuelos": 267
+      },
+      {
+        "weather": "Lluvia + viento",
+        "carrier": "DL",
+        "delayed": 0.3968668407310705,
+        "vuelos": 383
+      },
+      {
+        "weather": "Lluvia + viento",
+        "carrier": "US",
+        "delayed": 0.2597402597402597,
+        "vuelos": 154
+      },
+      {
+        "weather": "Lluvia + viento",
+        "carrier": "MQ",
+        "delayed": 0.45789473684210524,
+        "vuelos": 190
+      },
+      {
+        "weather": "Lluvia + viento",
+        "carrier": "B6",
+        "delayed": 0.43956043956043955,
+        "vuelos": 546
+      },
+      {
+        "weather": "Normal",
+        "carrier": "OO",
+        "delayed": 0.21428571428571427,
+        "vuelos": 28
+      },
+      {
+        "weather": "Lluvia + viento",
+        "carrier": "VX",
+        "delayed": 0.40425531914893614,
+        "vuelos": 47
+      },
+      {
+        "weather": "Lluvia + viento",
+        "carrier": "9E",
+        "delayed": 0.51875,
+        "vuelos": 160
+      },
+      {
+        "weather": "Lluvia + viento",
+        "carrier": "EV",
+        "delayed": 0.6159420289855072,
+        "vuelos": 138
+      },
+      {
+        "weather": "Lluvia + viento",
+        "carrier": "UA",
+        "delayed": 0.41379310344827586,
+        "vuelos": 203
+      },
+      {
+        "weather": "Lluvia + viento",
+        "carrier": "WN",
+        "delayed": 0.6065573770491803,
+        "vuelos": 61
+      },
+      {
+        "weather": "Lluvia + viento",
+        "carrier": "FL",
+        "delayed": 0.6666666666666666,
+        "vuelos": 24
+      },
+      {
+        "weather": "Lluvia + viento",
+        "carrier": "AS",
+        "delayed": 0.0,
+        "vuelos": 2
+      },
+      {
+        "weather": "Lluvia + viento",
+        "carrier": "HA",
+        "delayed": 0.3333333333333333,
+        "vuelos": 6
+      },
+      {
+        "weather": "Lluvia + viento",
+        "carrier": "YV",
+        "delayed": 1.0,
+        "vuelos": 3
+      },
+      {
+        "weather": "Lluvia + viento",
+        "carrier": "F9",
+        "delayed": 0.42857142857142855,
+        "vuelos": 7
+      },
+      {
+        "weather": "Viento fuerte",
+        "carrier": "OO",
+        "delayed": 0.0,
+        "vuelos": 1
+      }
+    ]
+  },
+  "width": "container",
+  "height": 400,
+  "params": [
+    {
+      "name": "carrier_hover",
+      "select": {
+        "type": "point",
+        "fields": [
+          "carrier"
+        ],
+        "on": "pointerover",
+        "clear": "pointerout"
+      }
+    }
+  ]
+}

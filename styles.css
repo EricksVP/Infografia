@@ -1,0 +1,30 @@
+/* Estilos específicos para la Infografía Móvil */
+
+.chart-container {
+    display: grid;
+    place-items: start center;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch; /* Suavidad en iOS */
+}
+
+/* Forzar responsive a vega-embed */
+.vega-embed {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+/* Ocultar el botón de opciones (...) de Vega, inútil en celulares */
+.vega-embed summary {
+    display: none !important;
+}
+
+/* Ocultar tooltip de vega si estorba en mobile, o hacerlo más pequeño */
+#vg-tooltip-element {
+    font-size: 10px !important;
+    max-width: 200px !important;
+    white-space: normal !important;
+}
